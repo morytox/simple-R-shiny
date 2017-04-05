@@ -238,7 +238,10 @@
       "kind": "PersistentVolumeClaim",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}-docs-pvc"
+        "name": "${NAME}-docs-pvc",
+				"annotations": {
+					"volume.beta.kubernetes.io/storage-class": "${STORAGE_CLASS}"
+				}
       },
       "spec": {
         "accessModes": [
@@ -255,7 +258,10 @@
       "kind": "PersistentVolumeClaim",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}-bookmarks-pvc"
+        "name": "${NAME}-bookmarks-pvc",
+				"annotations": {
+					"volume.beta.kubernetes.io/storage-class": "${STORAGE_CLASS}"
+				}
       },
       "spec": {
         "accessModes": [
@@ -272,7 +278,10 @@
       "kind": "PersistentVolumeClaim",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}-logs-pvc"
+        "name": "${NAME}-logs-pvc",
+				"annotations": {
+					"volume.beta.kubernetes.io/storage-class": "${STORAGE_CLASS}"
+				}
       },
       "spec": {
         "accessModes": [
@@ -320,6 +329,11 @@
 		"description": "Volume space available for Document uploads, e.g. 512Mi, 2Gi.",
 		"value": "512Mi",
 		"required": true
+	},{
+		"name": "STORAGE_CLASS",
+		"displayName": "Storage Class",
+		"description": "Tye of Storage for Persistant Volume Claims.",
+		"value": "appao3-prod-sas"
 	},{
 		"name": "MEMORY_LIMIT",
 		"displayName": "Memory Limit",
