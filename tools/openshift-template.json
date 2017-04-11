@@ -144,7 +144,7 @@
 		},
 		"spec": {
 			"strategy": {
-				"type": "Rolling"
+				"type": "Recreate"
 			},
 			"revisionHistoryLimit": 2,
 			"triggers": [
