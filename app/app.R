@@ -1,56 +1,50 @@
-library(shiny)
-library(ggplot2)
-library(plotly)
-options(shiny.sanitize.errors = FALSE)
-data <- read.csv(file.path("data", "iris.csv"))
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
 
+library(shiny)
+
+# Define UI for application that draws a histogram
 ui <- fluidPage(
-  tags$head(
-    includeCSS(file.path("www", "main.css"))
-  ),
-  titlePanel("Test shiny app"),
-  sidebarLayout(
-    sidebarPanel(
-      "You should see an image, a table, and a plot",
-      br(), br(),
-      img(src = "bcgov.jpg"),
-      br(), br(),
-      numericInput("size", "Size of points", 1, 1, 10),
-      downloadButton("download", "Download data (csv)"),
-      br(), br(),
-      actionButton("write", "Write data to shiny server disk (csv)")
-    ),
-    mainPanel(
-      plotlyOutput("plot"),
-      tableOutput("table")
-    )
-  )
+   
+   # Application title
+   titlePanel("Old Faithful Geyser Data"),
+   
+   # Sidebar with a slider input for number of bins 
+   sidebarLayout(
+      sidebarPanel(
+         sliderInput("bins",
+                     "Number of bins:",
+                     min = 1,
+                     max = 50,
+                     value = 30)
+      ),
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         plotOutput("distPlot")
+      )
+   )
 )
 
-server <- function(input, output, session) {
-  output$table <- renderTable(
-    data
-  )
-
-  output$plot <- renderPlotly({
-    p <- ggplot(data, aes(Sepal.Length, Sepal.Width)) +
-      geom_point(size = input$size)
-
-    ggplotly(p)
-  })
-
-  output$download <- downloadHandler(
-    filename = function() {
-      paste0("iris-", as.integer(Sys.time()), ".csv")
-    },
-    content = function(file) {
-      write.csv(data, file, row.names = FALSE)
-    }
-  )
-
-  observeEvent(input$write, {
-    write.csv(data, "output/output.csv", row.names = FALSE)
-  })
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+   
+   output$distPlot <- renderPlot({
+      # generate bins based on input$bins from ui.R
+      x    <- faithful[, 2] 
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+      
+      # draw the histogram with the specified number of bins
+      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+   })
 }
 
+# Run the application 
 shinyApp(ui = ui, server = server)
+
