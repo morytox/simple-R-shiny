@@ -1,1 +1,1 @@
-ggplot2
+ggplot2 shinydashboard wordcloud twitteR tm plotly
