@@ -245,7 +245,7 @@
       },
       "spec": {
         "accessModes": [
-          "ReadWriteOnce"
+          "ReadWriteMany"
         ],
         "resources": {
           "requests": {
@@ -265,7 +265,7 @@
       },
       "spec": {
         "accessModes": [
-          "ReadWriteOnce"
+          "ReadWriteMany"
         ],
         "resources": {
           "requests": {
@@ -285,7 +285,7 @@
       },
       "spec": {
         "accessModes": [
-          "ReadWriteOnce"
+          "ReadWriteMany"
         ],
         "resources": {
           "requests": {
